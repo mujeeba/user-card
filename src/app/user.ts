@@ -1,9 +1,9 @@
 export interface UserDetails {
-    results: User[]
+    results: RawUser[]
     info: Info
   }
   
-  export interface User {
+  export interface RawUser {
     gender: string
     name: Name
     location: Location
@@ -87,7 +87,8 @@ export interface UserDetails {
     version: string
   }
 
-  export interface TranformedUser {
+  export interface User {
+      id:string;
       name:string;
       gender: string;
       phone: string;

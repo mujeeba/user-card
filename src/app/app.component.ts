@@ -5,35 +5,24 @@ import { UserServiceService } from './user-service.service';
 @Component({
   selector: 'app-root',
   template: `
-  <mat-card *ngFor="let user of users | async;" class="user-card">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>{{user.name}}</mat-card-title>
-        </mat-card-title-group>
-        </mat-card-header>
-        <mat-card-content class="user-content">
-        <mat-grid-list cols="2" rowHeight="2:1">
-        <mat-grid-tile><div class="user-details">
-    <div>{{user.gender}}</div>
-    <div>{{user.phone}}</div>
-    <div>{{user.email}}</div>
-    <div>{{user.address.street}}</div>
-    <div>{{user.address.secoundary}}</div>
-  </div></mat-grid-tile>
-  <mat-grid-tile> <img mat-card-md-image src="{{user.picture}}"  alt=""></mat-grid-tile>
-</mat-grid-list>
-    </mat-card-content>
-  </mat-card>
+  <div class="container">
+    <app-user-form (setNumberOfRecordToFetch)="setNumberOfRecordToFetch($event)" (setShowUserList)="setShowUserList($event)"></app-user-form>
+    <app-user-list *ngIf="showUserList" [numberOfUsers]="numberOfUsers"></app-user-list>
+  </div>
   `,
   styles: []
 })
 export class AppComponent {
-  title = 'user-cards';
-  users = this.userServiceService.getRandomUsers();
-  constructor(private userServiceService: UserServiceService) { }
+ 
+  showUserList: boolean = false;
+  numberOfUsers: number = 0;
 
-  // ngOnInit() {
-  //   this.userServiceService.getRandomUsers().subscribe((users)=>this.users=users)
-  // }
+
+  setNumberOfRecordToFetch(noOfRec:number){
+    this.numberOfUsers = noOfRec;
+  }
+  setShowUserList(showUserList:boolean){
+    this.showUserList = showUserList;
+  }
 
 }

@@ -1,0 +1,6 @@
+<div *ngIf="isLoading" class="user-loader-container">
+    <mat-spinner  class="user-loader" ></mat-spinner>
+</div>
+<div class="users-container">
+    <app-user-detail *ngFor="let user of users;  " [user]="user"></app-user-detail>
+</div>

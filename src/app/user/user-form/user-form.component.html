@@ -1,0 +1,15 @@
+
+
+<mat-card  class="user-card">
+    <mat-card-content class="user-content">
+        <form class="example-form">
+            <mat-form-field class="number-users-input">
+                <mat-label>Number of Users</mat-label>
+                <input [disabled]="showUserList" matInput type="number" [formControl]="numberOfUsers">
+            </mat-form-field>
+            <button class="button-fetch" mat-button (click)="fetch()" color="primary">Fetch</button>
+            <button class="button-reset" mat-button (click)="reset()" color="primary">Reset</button>
+        </form>
+    </mat-card-content>
+</mat-card>
+

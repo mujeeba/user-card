@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { TranformedUser, User, UserDetails } from './user';
-import { forkJoin, map, of } from 'rxjs';
+import { User, RawUser, UserDetails } from './user';
+import { forkJoin, map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +9,21 @@ import { forkJoin, map, of } from 'rxjs';
 export class UserServiceService {
 
   url = "https://randomuser.me/api"
+
   constructor(private http: HttpClient) { }
 
-  getRandomUsers() {
+  getRandomUsers(numberUsers: number) {
     let userRequest = this.http.get<UserDetails>(this.url).pipe(
       map(result => { return this.transformData(result.results[0]); })
-    );;
-    return forkJoin([userRequest, userRequest, userRequest, userRequest]);
+    );
+    let allUserReqest : Observable<User>[] = new Array(numberUsers).fill(userRequest);
+    return forkJoin(allUserReqest);
   }
 
-  private transformData(user: User) {
+  private transformData(user: RawUser) {
 
-    let tranformedUser: TranformedUser = {
+    let tranformedUser: User = {
+      id:user.id.value,
       name: user.name.title.concat(" ", user.name.last, " ", user.name.first),
       email: user.email,
       gender: user.gender,
